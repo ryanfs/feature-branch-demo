@@ -83,6 +83,15 @@ merge | move changes | applies new changes from one branch to the HEAD of the cu
 rebase | move changes | applies changes from a different branch's history underneath the current branch's history
 reset | un-set changes | History -> Staging/WD/Null depending on what flag is set
 
+Note: `HEAD` is a special alias for the last commit's `SHA1`.  You can use it with commands that take a `SHA1` as arguments, e.g., `git show HEAD` will show the last commit.  
+
+`^` can be added to `HEAD` to point one commit back.
+`git show HEAD^` will display the commit made before the most recent commit.  `^` can be chained, e.g., `git show HEAD^^^` will show the third most recent commit.
+
+We can inspect the changes on origin by prefacing a branch or `SHA1` with `origin/`.  Try it with `show` or `log`
+
+__NOTE:__ `git log --oneline --decorate --graph --all` is your friend
+
 ### __Zoinks__
 
 Let's look at an example and outline the steps up to committing and pushing to origin:
@@ -101,6 +110,11 @@ Let's look at an example and outline the steps up to committing and pushing to o
 What story can we tell using the model of git's data layers from above?
 
 #### Feature Branch
+
+As a project grows, it can help substantially to break out sets of changes into their own branches which are subsequently merged back in to the `master` branch.  As you know, these branches can also be pushed to github.
+
+Let's check out two feature branches and merge them back in to master
+
 - `checkout -b` bye
 - Write `bye()` in `bye.js`
 - Commit
@@ -111,13 +125,42 @@ What story can we tell using the model of git's data layers from above?
 - `checkout` master and merge in `bye`
 
 #### Conflict Resolution
+
+Feature branches are great but can lead to difficulties
+when overlapping or incompatible sets of changes are merged back in to a common branch, e.g., `master`.  `Git` is pretty good about safely handling multiple streams of changes, but sometimes you have to manually pitch in to get the job done.
+
+When trying to `git merge` that produces a conflict the output will look something like this:
+
+```bash
+Auto-merging convo.js
+CONFLICT (content): Merge conflict in convo.js
+Resolved 'convo.js' using previous resolution.
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+> To see the beginning of the merge conflict in your file, search the file for the conflict marker <<<<<<<. When you open the file in your text editor, you'll see the changes from the HEAD or base branch after the line <<<<<<< HEAD. Next, you'll see =======, which divides your changes from the changes in the other branch, followed by >>>>>>> BRANCH-NAME.
+[source](https://help.github.com/articles/resolving-a-merge-conflict-using-the-command-line/)
+
 - `touch` stringly.js
-- `checkout -b` toUpper
+- `checkout -b` upper
 - add `function toUpper()` + commit
-- `checkout -b` toLower + commit
+- `git checkout master`
+- `checkout -b` uower + commit
 - add `function toLower()`
 - Merge both back into `master`
-- Resolve conflict
+  - see the following conflict:
+  ```
+    <<<<<<< HEAD
+  function toUpper(str) {
+    return str.toUpperCase();
+  =======
+  function toLower(str) {
+    return str.toLowerCase();
+  >>>>>>> lower
+  }
+  ```
+
+- Resolve conflict by either removing the utility lines (a rarely available solution but it works in this case), or remove one set of changes.  Either way, whatever the state of the file when we save+quite, that will be what ends up being committed so make sure it's valid!
 
 ### (You Do) Local Conflict Resolution
 Go [here](local_lab.md) and follow the instructions
@@ -130,28 +173,37 @@ Go [here](local_lab.md) and follow the instructions
 - Add remote origin to your local repo
 - Push to origin
 
+## Merging and rebasing branches
+
+### merging
+
+[`git merge`](https://git-scm.com/docs/git-merge)
+
+Typically branches, should be _merged_ into master.  **This should be done from Github**.  Merging takes every commit and along with a merge-commit from the branch and adds that to the target branch (usually `master`)
+
+**Ex**: From `master`: `git merge BRANCH-NAME` takes all the commits from `BRANCH-NAME` and a merge-commit and adds those to master.
+
+
+### rebasing
+
+[`git rebase`](https://git-scm.com/docs/git-rebase)
+
+Rebasing rewrites history.  This adds the commits from another branch and puts your commits on top of your branch.  (Actually it puts _new copies_ of your commits on top). Typically, we rebase `master` from another branch.  This does not add an extra merge-commit.
+
+**Ex**: From some branch: `git rebase master` will take anything that was added to master since branched off (or last rebased) and put those commits _before yours_.  Your commits are then added on top of your branch.
+
+Technically, `git pull` is a shorthand for `git fetch origin HEAD` together with `git merge origin/HEAD`.  In other words, `pull` is an alias for fetching the changes from origin and merging them into the local copy of the branch.  adding the `--rebase` flag to `pull` will rebase rather than merge, thereby not adding a merge commit to your history but carrying with it additional pain when conflicts emerge.
+
+
+## (I +1 Do:) PR Approval + merge in GitHub
+
+Now I'll make a small repo and accept a PR from someone else before pulling down the changes locally.
+
+## (You Do): Group Gitting
+It's Go Time: [Git 'r Done](group_lab)
+
 What story could we tell in light of the data model described above?  What commands could we use to inspect the work we've done so far?  
 
-We can inspect the changes on origin by prefacing a branch or `SHA1` with `origin/`.  Try it with `show` or `log`
-
-__NOTE:__ `git log --oneline --decorate --graph --all` is your friend
-
-#### Feature Branches
-
-As a project grows, it can help substantially to break out sets of changes into their own branches which are subsequently merged back in to the `master` branch.  As you know, these branches can also be pushed to github.
-
-Let's check out two feature branches and merge them back in to master
-
-- `git checkout -b nav`
-- Add a few commits to make a nav
-- `git checkout master`; `git checkout -b main`
-- Add a few commits to make a main container
-- `git checkout master`
-  - How can we view all of the changes we've just made and their relation to one another?
-- `git merge nav`
-  - Inspect history and the current branch at this point
-- `git merge main`
-  - What happened?  How do we get back on track?
 
 ## Extra Resources
 - [An Incredible Git Tutorial](http://gitimmersion.com/) probably the second most helpful git thing I've ever come across . . .by our friend `Jim Weirich`
