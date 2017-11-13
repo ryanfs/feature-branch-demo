@@ -165,13 +165,6 @@ Automatic merge failed; fix conflicts and then commit the result.
 ### (You Do) Local Conflict Resolution
 Go [here](local_lab.md) and follow the instructions
 
-- Init a new repository
-- Make an `init` commit before making any changes
-- Add a file `index.js` with very skeletal html, i.e., just an opening and closing `html` tag, `head`, and `body`
-- Commit
-- Create a new repo on github
-- Add remote origin to your local repo
-- Push to origin
 
 ## Merging and rebasing branches
 
@@ -199,10 +192,25 @@ Technically, `git pull` is a shorthand for `git fetch origin HEAD` together with
 
 Now I'll make a small repo and accept a PR from someone else before pulling down the changes locally.
 
+[Creating a PR from a branch](https://help.github.com/articles/creating-a-pull-request/)
+
+[Appriving/Merging a PR](https://help.github.com/articles/merging-a-pull-request/)
+
+These may prove helpful in the following exercise
+
 ## (You Do): Group Gitting
 It's Go Time: [Git 'r Done](group_lab)
 
-What story could we tell in light of the data model described above?  What commands could we use to inspect the work we've done so far?  
+
+## Resets (Resources)
+`git reset` can be used to undo committed history and place the changes back either into the staging area `--soft` or in the working directory `--mixed` or discard them entirely `--hard`.  Be very careful with `git reset` especially with the `--hard` option since this is potentially destructive.
+
+If you undo public history you will have to `git push --force` after making the changes.
+
+[How to Reset (almost) anything](https://github.com/blog/2019-how-to-undo-almost-anything-with-git)
+
+[Reset, Checkout, Revert](https://www.atlassian.com/git/tutorials/resetting-checking-out-and-reverting)
+
 
 
 ## Extra Resources

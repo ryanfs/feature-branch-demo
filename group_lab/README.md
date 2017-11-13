@@ -13,7 +13,7 @@ All of your work will happen in your new repo.  You are **not** making any PRs t
 
 ### Creating new branches
 
-For the following steps please pick **one** team member's repo and do all the work there.  The purpose of this exercise is to work with git/github as a team.
+For the following steps please pick **one** team member's repo and do all the work there.  The purpose of this exercise is to work with git/github as a team.  You can either all clone from one member's repo in a separate directory or adjust the remote origin url with `set-url` like from above.
 
 Make sure at least one person reviews each PR.
 
