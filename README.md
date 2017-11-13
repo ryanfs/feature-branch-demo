@@ -5,7 +5,7 @@
 - Describe the different layers of the data model git exposes to the user
 - Explain basic git commands in terms of this model, e.g., commit, add, log
 - Safely work on a feature branch and merge it back to the master branch
-- Be aware of a few pitfalls when working with git in a Group
+- Be aware of 2 pitfalls when working with git in a Group and how to resolve/avoid them.
 
 ### Review
 First, let's call to mind some of the `git` commands we've already seen.
