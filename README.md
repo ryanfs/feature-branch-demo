@@ -83,7 +83,7 @@ merge | move changes | applies new changes from one branch to the HEAD of the cu
 rebase | move changes | applies changes from a different branch's history underneath the current branch's history
 reset | un-set changes | History -> Staging/WD/Null depending on what flag is set
 
-Note: `HEAD` is a special alias for the last commit's `SHA1`.  You can use it with commands that take a `SHA1` as arguments, e.g., `git show HEAD` will show the last commit.  
+Note: `HEAD` is a special alias for the last commit's `SHA1`.  You can use it with commands that take a `SHA1` as arguments, e.g., `git show HEAD` will show the last commit.
 
 `^` can be added to `HEAD` to point one commit back.
 `git show HEAD^` will display the commit made before the most recent commit.  `^` can be chained, e.g., `git show HEAD^^^` will show the third most recent commit.
