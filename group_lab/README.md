@@ -6,10 +6,10 @@
 
 * **Clone** this repo
 * create a new repo on github called `LAB_U03_D08_Group-Git`
-* `cd` into your local repo and change the origin remote `git remote set-url origin YOUR-GIT-URL`
+* `cd` into your local repo and change the origin remote `git remote set-url origin YOUR-GIT-URL`  (Every team member will be using the same remote - not one remote for each person.  The owner of the remote may need to give permissions to the other members.
 
+You are **not** making any PRs to the original repo
 
-All of your work will happen in your new repo.  You are **not** making any PRs to the original repo
 
 ### Creating new branches
 
